@@ -1,0 +1,15 @@
+---
+- name: make a build dir
+  file: state=directory name=/root/ganglia-gmond-dockerized
+
+- name: put Dockerfile
+  template: src=Dockerfile dest=/root/ganglia-gmond-dockerized/Dockerfile
+
+- name: put run
+  template: src=run dest=/root/ganglia-gmond-dockerized/run mode=0755
+
+- name: build a Docker image for Ganglia-gmond
+  command: docker build -t gitinsky/ganglia-gmond:0.1.0 --rm /root/ganglia-gmond-dockerized
+
+- name: tag it as latest
+  command: docker build -t gitinsky/ganglia-gmond:latest --rm /root/ganglia-gmond-dockerized
